@@ -39,6 +39,8 @@ void ASnakeHead::SaveDir(float _Value)
 void ASnakeHead::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	
 }
 
 void ASnakeHead::LeftMove(float _Value)
