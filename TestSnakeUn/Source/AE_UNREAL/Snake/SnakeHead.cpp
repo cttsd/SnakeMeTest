@@ -7,6 +7,8 @@
 // Sets default values
 ASnakeHead::ASnakeHead()
 {
+	Dir = 0;
+	
 	// 언리얼에서 프레임마다 Tick을 돌려야 하는 액터는
 	// PrimaryActorTick.bCanEverTick = true; 로 만들어줘야 Tick을 돌릴수가 있습니다.
 	
@@ -15,9 +17,10 @@ ASnakeHead::ASnakeHead()
 	// 틱을 돌릴거냐 말거냐
 	PrimaryActorTick.bCanEverTick = true;
 	// PrimaryActorTick.TickGroup = ETickingGroup::TG_PrePhysics;
-
+	
 
 }
+
 
 // Called when the game starts or when spawned
 void ASnakeHead::BeginPlay()
@@ -25,6 +28,12 @@ void ASnakeHead::BeginPlay()
 	Super::BeginPlay();
 
 }
+void ASnakeHead::SaveDir(float _Value)
+{
+	Dir = _Value; // 이전 행동 저장
+}
+
+
 
 // Called every frame
 void ASnakeHead::Tick(float DeltaTime)
@@ -69,7 +78,7 @@ void ASnakeHead::DownMove(float _Value)
 	AddActorLocalOffset(FVector::DownVector);
 }
 
-void ASnakeHead::LeftAction()
+void ASnakeHead::LeftAction(float _Value)
 {
 	FVector MovePos = FVector::LeftVector * 100.0f;
 
@@ -77,8 +86,18 @@ void ASnakeHead::LeftAction()
 	{
 		return;
 	}
+	
 
-	AddActorLocalOffset(FVector::LeftVector * 100.0f);
+	if (Dir != 2)
+	{
+		Dir = 1;
+		AddActorLocalOffset(FVector::LeftVector * 100.0f);
+
+	}
+
+	
+
+	
 
 	// 여기에 Body가 있는지 확인해야 한다.
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation(), "Body"))
@@ -89,7 +108,7 @@ void ASnakeHead::LeftAction()
 	}
 
 }
-void ASnakeHead::RightAction()
+void ASnakeHead::RightAction(float _Value)
 {
 	FVector MovePos = FVector::RightVector * 100.0f;
 
@@ -97,9 +116,18 @@ void ASnakeHead::RightAction()
 	{
 		return;
 	}
+	
 
-	AddActorLocalOffset(FVector::RightVector * 100.0f);
+	if (Dir != 1)
+	{
+		Dir = 2;
+		AddActorLocalOffset(FVector::RightVector * 100.0f);;
 
+	}
+
+	
+
+	
 	// 여기에 Body가 있는지 확인해야 한다.
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation(), "Body"))
 	{
@@ -109,7 +137,7 @@ void ASnakeHead::RightAction()
 	}
 
 }
-void ASnakeHead::UpAction()
+void ASnakeHead::UpAction(float _Value)
 {
 	FVector MovePos = FVector::UpVector * 100.0f;
 
@@ -117,9 +145,18 @@ void ASnakeHead::UpAction()
 	{
 		return;
 	}
+	
 
+	if (Dir != 3)
+	{
+		Dir = 0;
+		AddActorLocalOffset(FVector::UpVector * 100.0f);
 
-	AddActorLocalOffset(FVector::UpVector * 100.0f);
+	}
+
+	
+
+	
 
 	// 여기에 Body가 있는지 확인해야 한다.
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation(), "Body"))
@@ -129,7 +166,7 @@ void ASnakeHead::UpAction()
 		GetSnakeGameMode()->CurBodyReset();
 	}
 }
-void ASnakeHead::DownAction()
+void ASnakeHead::DownAction(float _Value)
 {
 	FVector MovePos = FVector::DownVector * 100.0f;
 
@@ -137,9 +174,19 @@ void ASnakeHead::DownAction()
 	{
 		return;
 	}
+	
+	
+	if (Dir != 0)
+	{
+		Dir = 3;
+		AddActorLocalOffset(FVector::DownVector * 100.0f);
+
+	}
 
 	// 이동을 하고 나서
-	AddActorLocalOffset(FVector::DownVector * 100.0f);
+	
+
+	
 
 	// 여기에 Body가 있는지 확인해야 한다.
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation(), "Body"))

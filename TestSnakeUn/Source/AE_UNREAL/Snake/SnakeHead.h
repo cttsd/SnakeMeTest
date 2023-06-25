@@ -14,12 +14,16 @@ class AE_UNREAL_API ASnakeHead : public ASnakePart
 public:	
 	// Sets default values for this actor's properties
 	ASnakeHead();
-
+	void SaveDir(float _Value);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
+	
+	
+	
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -29,7 +33,7 @@ public:
 
 	// 이 UFUNCTION 언리얼이 인식하게 해준것 뿐이고
 	// 이제부터 이 함수가 어떻게 쓰일건지를 () 넣어줘야 합니다.
-
+	
 
 
 	UFUNCTION(BlueprintCallable)
@@ -45,15 +49,18 @@ public:
 	void DownMove(float _Value);
 
 	UFUNCTION(BlueprintCallable)
-		void LeftAction();
+		void LeftAction(float _Value);
 
 	UFUNCTION(BlueprintCallable)
-		void RightAction();
+		void RightAction(float _Value);
 
 	UFUNCTION(BlueprintCallable)
-		void UpAction();
+		void UpAction(float _Value);
 
 	UFUNCTION(BlueprintCallable)
-		void DownAction();
-
+		void DownAction(float _Value);
+private:
+	
+	int Dir;
+	
 };
